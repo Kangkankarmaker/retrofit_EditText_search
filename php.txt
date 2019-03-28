@@ -1,0 +1,35 @@
+<?php 
+
+require_once 'connect.php';
+
+$type = $_GET['item_type'];
+
+/*if (isset($_GET['key'])) {*/
+    $key = $_GET["key"];
+  /*  if ($type == 'users') {*/
+        $query = "SELECT * FROM student_details natural join 2018_3rd WHERE s_reg LIKE '%$key%'  ";
+       
+        $result = mysqli_query($conn, $query );
+        $response = array();
+        while( $row = mysqli_fetch_assoc($result) ){
+            array_push($response, 
+            array(
+                's_id'=>$row['s_id'], 
+                's_roll'=>$row['s_roll'], 
+                's_name'=>$row['s_name'],
+                's_reg'=>$row['s_reg'],
+                'institute'=>$row['institute'],
+                '211'=>$row['211'],
+                '212'=>$row['212'],
+                '213'=>$row['213'],
+                '214'=>$row['214'],
+                '215'=>$row['215'])
+            );
+        }
+        echo json_encode($response);   
+/*    }
+} */
+
+mysqli_close($conn);
+
+?>
